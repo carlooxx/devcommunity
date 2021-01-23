@@ -7,9 +7,11 @@ const app = express();
 //Connect DB
 mongoose.connect(
   process.env.DB_CONNECT,
-  { useNewUrlParser: true, useUnifiedTopology: true },
+  { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true },
   console.log("Connected to DB")
 );
+//Body Parser
+app.use(express.json());
 //Routes
 app.use("/api/users", require("./routes/api/users"));
 app.use("/api/auth", require("./routes/api/auth"));
