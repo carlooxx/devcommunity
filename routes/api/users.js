@@ -4,10 +4,12 @@ const { registerValidation } = require("../api/validation");
 const gravatar = require("gravatar");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const dotenv = require("dotenv");
+
 //Importing Model
 const User = require("../../models/User");
 const { json } = require("express");
-
+dotenv.config();
 router.post("/", async (req, res) => {
   //Validation check
   const { error } = registerValidation(req.body);
@@ -36,8 +38,8 @@ router.post("/", async (req, res) => {
   });
 
   //JWT
-  const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET, {
-    expiresIn: 36000,
+  const token = jwt.sign({ id: user.id }, process.env.TOKEN_SECRET, {
+    expiresIn: 360000,
   });
   res.header("auth-token", token);
 
