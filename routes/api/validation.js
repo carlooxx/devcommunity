@@ -18,6 +18,15 @@ const loginValidation = (data) => {
   const validation = schema.validate(data);
   return validation;
 };
-
+//Status and Skills validation
+const statSkillValidation = (data) => {
+  const schema = Joi.object({
+    status: Joi.string().required(),
+    skills: Joi.string().required(),
+  }).unknown(true);
+  const validation = schema.validate(data);
+  return validation;
+};
 module.exports.registerValidation = registerValidation;
 module.exports.loginValidation = loginValidation;
+module.exports.statSkillValidation = statSkillValidation;
