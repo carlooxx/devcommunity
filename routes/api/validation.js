@@ -27,6 +27,29 @@ const statSkillValidation = (data) => {
   const validation = schema.validate(data);
   return validation;
 };
+//Exp validation
+const expValidation = (data) => {
+  const schema = Joi.object({
+    title: Joi.string().required(),
+    company: Joi.string().required(),
+    from: Joi.string().required(),
+  }).unknown(true);
+  const validation = schema.validate(data);
+  return validation;
+};
+//Edu validation
+const eduValidation = (data) => {
+  const schema = Joi.object({
+    school: Joi.string().required(),
+    degree: Joi.string().required(),
+    fieldofstudy: Joi.string().required(),
+    from: Joi.string().required(),
+  }).unknown(true);
+  const validation = schema.validate(data);
+  return validation;
+};
 module.exports.registerValidation = registerValidation;
 module.exports.loginValidation = loginValidation;
 module.exports.statSkillValidation = statSkillValidation;
+module.exports.expValidation = expValidation;
+module.exports.eduValidation = eduValidation;
