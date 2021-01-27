@@ -48,8 +48,17 @@ const eduValidation = (data) => {
   const validation = schema.validate(data);
   return validation;
 };
+//Post validation
+const postValidation = (data) => {
+  const schema = Joi.object({
+    text: Joi.string().required(),
+  }).unknown(true);
+  const validation = schema.validate(data);
+  return validation;
+};
 module.exports.registerValidation = registerValidation;
 module.exports.loginValidation = loginValidation;
 module.exports.statSkillValidation = statSkillValidation;
 module.exports.expValidation = expValidation;
 module.exports.eduValidation = eduValidation;
+module.exports.postValidation = postValidation;
