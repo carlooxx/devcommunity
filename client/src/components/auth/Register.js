@@ -2,7 +2,7 @@ import React, { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setAlert } from "../../action/alert";
-
+import { register } from "../../action/auth";
 const Register = () => {
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
@@ -19,7 +19,7 @@ const Register = () => {
     if (password !== password2) {
       dispatch(setAlert("Password do not match", "danger"));
     } else {
-      console.log("Success");
+      dispatch(register({ name, email, password }));
       //Database test
       // const newUser = {
       //   name,
@@ -54,7 +54,6 @@ const Register = () => {
             name="name"
             value={name}
             onChange={(e) => onChange(e)}
-            required
           />
         </div>
         <div className="form-group">
@@ -64,7 +63,6 @@ const Register = () => {
             name="email"
             value={email}
             onChange={(e) => onChange(e)}
-            required
           />
           <small className="form-text">
             This site uses Gravatar so if you want a profile image, use a

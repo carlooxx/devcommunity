@@ -17,7 +17,7 @@ router.post("/", async (req, res) => {
 
   //User exist check
   const emailExist = await User.findOne({ email: req.body.email });
-  if (emailExist) return res.status(400).send("User registered");
+  if (emailExist) return res.status(400).send("User already exist");
 
   //Avatar
   const avatar = gravatar.url(req.body.email, {
@@ -36,17 +36,36 @@ router.post("/", async (req, res) => {
     avatar,
     password: hashedPassword,
   });
+  const payload = {
+    user: {
+      id: user.id,
+    },
+  };
 
+  const token = jwt.sign(
+    payload,
+    process.env.TOKEN_SECRET,
+    { expiresIn: "5 days" },
+    (err, token) => {
+      if (err) throw err;
+      res.json({ token });
+    }
+  );
   //JWT
-  const token = jwt.sign({ id: user.id }, process.env.TOKEN_SECRET, {
-    expiresIn: 360000,
-  });
+  // const token = jwt.sign(
+  //   { user: { id: user.id } },
+  //   process.env.TOKEN_SECRET,
+  //   {
+  //     expiresIn: 360000,
+  //   },
+  //   (token) => res.json({ token })
+  // );
   res.header("auth-token", token);
 
   //Saving user
   try {
     const savedUser = await user.save();
-    res.send(savedUser);
+    // res.send(savedUser);
   } catch (err) {
     res.status(400).send("Server error");
   }
