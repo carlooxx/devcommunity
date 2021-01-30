@@ -14,58 +14,55 @@ router.post("/", async (req, res) => {
   //Validation check
   const { error } = registerValidation(req.body);
   if (error) return res.status(400).send(error.details[0].message);
-
-  //User exist check
-  const emailExist = await User.findOne({ email: req.body.email });
-  if (emailExist) return res.status(400).send("User already exist");
-
-  //Avatar
-  const avatar = gravatar.url(req.body.email, {
-    s: "200",
-    r: "pg",
-    d: "mm",
-  });
-
-  //Password encrypt
-  const salt = await bcrypt.genSalt(10);
-  const hashedPassword = await bcrypt.hash(req.body.password, salt);
-
-  const user = new User({
-    name: req.body.name,
-    email: req.body.email,
-    avatar,
-    password: hashedPassword,
-  });
-  const payload = {
-    user: {
-      id: user.id,
-    },
-  };
-
-  const token = jwt.sign(
-    payload,
-    process.env.TOKEN_SECRET,
-    { expiresIn: "5 days" },
-    (err, token) => {
-      if (err) throw err;
-      res.json({ token });
-    }
-  );
-  //JWT
-  // const token = jwt.sign(
-  //   { user: { id: user.id } },
-  //   process.env.TOKEN_SECRET,
-  //   {
-  //     expiresIn: 360000,
-  //   },
-  //   (token) => res.json({ token })
-  // );
-  res.header("auth-token", token);
-
-  //Saving user
   try {
-    const savedUser = await user.save();
-    // res.send(savedUser);
+    //User exist check
+    const emailExist = await User.findOne({ email: req.body.email });
+    if (emailExist) return res.status(400).send("User already exist");
+
+    //Avatar
+    const avatar = gravatar.url(req.body.email, {
+      s: "200",
+      r: "pg",
+      d: "mm",
+    });
+
+    //Password encrypt
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(req.body.password, salt);
+
+    const user = new User({
+      name: req.body.name,
+      email: req.body.email,
+      avatar,
+      password: hashedPassword,
+    });
+    // const payload = {
+    //   user: {
+    //     id: user.id,
+    //   },
+    // };
+
+    // const token = jwt.sign(
+    //   payload,
+    //   process.env.TOKEN_SECRET,
+    //   { expiresIn: "5 days" },
+    //   (err, token) => {
+    //     if (err) throw err;
+    //     res.json({ token });
+    //   }
+    // );
+    // JWT
+    const token = jwt.sign({ id: user.id }, process.env.TOKEN_SECRET, {
+      expiresIn: 360000,
+    });
+
+    // res.header("auth-token", token);
+
+    //Saving user
+
+    await user.save();
+    res.send({ token });
+    // res.send(user);
   } catch (err) {
     res.status(400).send("Server error");
   }
