@@ -5,6 +5,7 @@ import {
   AUTH_ERROR,
   LOGIN_SUCCESS,
   LOGIN_FAILED,
+  LOGOUT,
 } from "../action/types";
 
 const initState = {
@@ -34,11 +35,13 @@ const authReducer = (state = initState, action) => {
     case REGISTER_FAILED:
     case AUTH_ERROR:
     case LOGIN_FAILED:
+    case LOGOUT:
       return {
         ...state,
         token: null,
         isAuthenticated: false,
         isLoading: false,
+        user: null,
       };
     default:
       return state;
