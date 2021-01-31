@@ -22,21 +22,25 @@ router.post("/", async (req, res) => {
   //Validation check
   const { error } = loginValidation(req.body);
   if (error) return res.status(400).send(error.details[0].message);
+  try {
+    //User exist check
+    const user = await User.findOne({ email: req.body.email });
+    if (!user) return res.status(400).send("Invalid Credentials");
 
-  //User exist check
-  const user = await User.findOne({ email: req.body.email });
-  if (!user) return res.status(400).send("Invalid Credentials");
+    //Password = Email check
+    const validPass = await bcrypt.compare(req.body.password, user.password);
+    if (!validPass) return res.status(400).send("Invalid Credentials");
 
-  //Password = Email check
-  const validPass = await bcrypt.compare(req.body.password, user.password);
-  if (!validPass) return res.status(400).send("Invalid Credentials");
-
-  //JWT
-  const token = jwt.sign({ id: user.id }, process.env.TOKEN_SECRET, {
-    expiresIn: 360000,
-  });
-  res.header("auth-token", token);
-  res.send("Loged in");
+    //JWT
+    const token = jwt.sign({ id: user.id }, process.env.TOKEN_SECRET, {
+      expiresIn: 360000,
+    });
+    res.header("auth-token", token);
+    res.send({ token });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server error");
+  }
 });
 
 module.exports = router;

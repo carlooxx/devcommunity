@@ -3,6 +3,8 @@ import {
   REGISTER_FAILED,
   USER_LOADED,
   AUTH_ERROR,
+  LOGIN_SUCCESS,
+  LOGIN_FAILED,
 } from "../action/types";
 
 const initState = {
@@ -22,6 +24,7 @@ const authReducer = (state = initState, action) => {
         user: action.payload,
       };
     case REGISTER_SUCCESS:
+    case LOGIN_SUCCESS:
       return {
         ...state,
         ...action.payload,
@@ -30,6 +33,7 @@ const authReducer = (state = initState, action) => {
       };
     case REGISTER_FAILED:
     case AUTH_ERROR:
+    case LOGIN_FAILED:
       return {
         ...state,
         token: null,

@@ -62,6 +62,7 @@ router.post("/", async (req, res) => {
 
     await user.save();
     res.send({ token });
+
     // res.send(user);
   } catch (err) {
     res.status(400).send("Server error");
