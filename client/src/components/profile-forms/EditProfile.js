@@ -1,14 +1,17 @@
-import { useDispatch } from "react-redux";
-import React, { Fragment, useState } from "react";
-import { createProfile } from "../../action/profile";
+import { useDispatch, useSelector } from "react-redux";
+import React, { Fragment, useState, useEffect } from "react";
+import { createProfile, getCurrentProfile } from "../../action/profile";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 
-const CreateProfile = () => {
+const EditProfile = () => {
+  const profile = useSelector((state) => state.profile.profile);
+  const isLoading = useSelector((state) => state.profile.isLoading);
   const dispatch = useDispatch();
   const history = useHistory();
   const [displaySocialInputs, toggleSocialInputs] = useState(false);
-  const [formData, setFormData] = useState({
+
+  const initState = {
     company: "",
     website: "",
     location: "",
@@ -21,7 +24,8 @@ const CreateProfile = () => {
     linkedin: "",
     youtube: "",
     instagram: "",
-  });
+  };
+  const [formData, setFormData] = useState(initState);
 
   const {
     company,
@@ -37,16 +41,32 @@ const CreateProfile = () => {
     youtube,
     instagram,
   } = formData;
+
+  useEffect(() => {
+    if (!profile) dispatch(getCurrentProfile());
+    if (!isLoading) {
+      const profileData = { ...initState };
+      for (const key in profile) {
+        if (key in profileData) profileData[key] = profile[key];
+      }
+      for (const key in profile.social) {
+        if (key in profileData) profileData[key] = profile.social[key];
+      }
+      setFormData(profileData);
+    }
+  }, [isLoading, getCurrentProfile, profile]);
+
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
   const onSubmit = (e) => {
     e.preventDefault();
-    dispatch(createProfile(formData, history));
+    dispatch(createProfile(formData, history, true));
   };
+
   return (
     <Fragment>
-      <h1 className="large text-primary">Create Your Profile</h1>
+      <h1 className="large text-primary">Edit Your Profile</h1>
       <p className="lead">
         <i className="fas fa-user"></i> Let's get some information to make your
         profile stand out
@@ -219,4 +239,4 @@ const CreateProfile = () => {
   );
 };
 
-export default CreateProfile;
+export default EditProfile;
