@@ -18,7 +18,6 @@ const profile = (state = initState, action) => {
     case PROFILE_ERR:
       return {
         ...state,
-        error: action.payload,
         isLoading: false,
       };
     case CLEAR_PROFILE:
