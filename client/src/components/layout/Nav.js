@@ -12,6 +12,12 @@ const Nav = () => {
   const authLinks = (
     <ul>
       <li>
+        <Link to="/dashboard">
+          <i className="fa fa-user"></i>{" "}
+          <span className="hide-sm">DASHBOARD</span>
+        </Link>
+      </li>
+      <li>
         <a href="#!" onClick={() => dispatch(logout())}>
           <i className="fa fa-sign-out-alt"></i>{" "}
           <span className="hide-sm">LOGOUT</span>

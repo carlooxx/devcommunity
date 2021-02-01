@@ -6,6 +6,7 @@ import {
   LOGIN_FAILED,
   LOGIN_SUCCESS,
   LOGOUT,
+  CLEAR_PROFILE,
 } from "./types";
 import axios from "axios";
 import { setAlert } from "../action/alert";
@@ -74,8 +75,11 @@ export const login = ({ email, password }) => async (dispatch) => {
     });
   }
 };
-//Logout user
+//Logout user and clear profile data
 export const logout = () => (dispatch) => {
+  dispatch({
+    type: CLEAR_PROFILE,
+  });
   dispatch({
     type: LOGOUT,
   });
