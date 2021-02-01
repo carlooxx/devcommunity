@@ -17,7 +17,7 @@ const request = require("request");
 router.get("/me", verify, async (req, res) => {
   try {
     const profile = await Profile.findOne({
-      user: req.body.id,
+      user: req.user.id,
     }).populate("user", ["name", "avatar"]);
     if (!profile)
       return res.status(400).send("There is no profile for this user");
