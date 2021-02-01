@@ -4,6 +4,8 @@ import { getCurrentProfile } from "../../action/profile";
 import Spinner from "../layout/Spinner";
 import { Link } from "react-router-dom";
 import DashboardAction from "./DashboardAction";
+import Experience from "./Experience";
+import Education from "./Education";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -23,7 +25,11 @@ const Dashboard = () => {
         <i className="fas fa-user">Welcome {user && user.name}</i>
       </p>
       {profile !== null ? (
-        <Fragment>{<DashboardAction />}</Fragment>
+        <Fragment>
+          <DashboardAction />
+          <Experience experience={profile.experience} />
+          <Education education={profile.education} />
+        </Fragment>
       ) : (
         <Fragment>
           <p>You have not yet setup a profile, please add some info</p>
