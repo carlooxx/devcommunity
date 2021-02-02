@@ -39,6 +39,7 @@ const profile = (state = initState, action) => {
       return {
         ...state,
         isLoading: false,
+        user: null,
       };
     case CLEAR_PROFILE:
       return {
