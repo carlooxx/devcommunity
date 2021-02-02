@@ -12,8 +12,12 @@ const Nav = () => {
   const authLinks = (
     <ul>
       <li>
+        <Link to="/posts">POSTS</Link>
+      </li>
+      <li>
         <Link to="/profiles">DEVELOPERS</Link>
       </li>
+      {" | "}
       <li>
         <Link to="/dashboard">
           <i className="fa fa-user"></i>{" "}

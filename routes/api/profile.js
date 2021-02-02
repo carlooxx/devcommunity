@@ -42,6 +42,7 @@ router.post("/", verify, async (req, res) => {
   const standardFields = [
     "handle",
     "company",
+    "website",
     "location",
     "bio",
     "status",
