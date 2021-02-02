@@ -3,6 +3,8 @@ import { getProfile } from "../../action/profile";
 import { Link, useRouteMatch } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import Spinner from "../layout/Spinner";
+import ProfileTop from "./ProfileTop";
+import ProfileAbout from "./ProfileAbout";
 
 const Profile = () => {
   const match = useRouteMatch();
@@ -33,6 +35,10 @@ const Profile = () => {
                 Edit Profile
               </Link>
             )}
+          <div className="profile-grid my-1">
+            <ProfileTop profile={profile} />
+            <ProfileAbout profile={profile} />
+          </div>
         </Fragment>
       )}
     </Fragment>
