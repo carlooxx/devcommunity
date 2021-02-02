@@ -12,6 +12,9 @@ const Nav = () => {
   const authLinks = (
     <ul>
       <li>
+        <Link to="/profiles">DEVELOPERS</Link>
+      </li>
+      <li>
         <Link to="/dashboard">
           <i className="fa fa-user"></i>{" "}
           <span className="hide-sm">DASHBOARD</span>
@@ -28,7 +31,7 @@ const Nav = () => {
   const guestLinks = (
     <ul>
       <li>
-        <a href="#!">DEVELOPERS</a>
+        <Link to="/profiles">DEVELOPERS</Link>
       </li>
       <li>
         <Link to="/register">REGISTER</Link>

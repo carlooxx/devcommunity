@@ -4,6 +4,8 @@ import {
   PROFILE_ERR,
   UPDATE_PROFILE,
   ACCOUNT_DELETED,
+  GET_PROFILES,
+  GET_REPOS,
 } from "./types";
 import axios from "axios";
 import { setAlert } from "./alert";
@@ -46,7 +48,61 @@ export const createProfile = (formData, history, edit = false) => async (
     });
   }
 };
-
+//Get all profiles
+export const getAllProfiles = () => async (dispatch) => {
+  dispatch({ type: CLEAR_PROFILE });
+  try {
+    const res = await axios.get("api/profile");
+    dispatch({
+      type: GET_PROFILES,
+      payload: res.data,
+    });
+  } catch (err) {
+    const errors = err.response.data;
+    if (errors) {
+      dispatch(setAlert(errors, "danger"));
+    }
+    dispatch({
+      type: PROFILE_ERR,
+    });
+  }
+};
+//Get profile
+export const getProfile = (userId) => async (dispatch) => {
+  try {
+    const res = await axios.get(`/user/${userId}`);
+    dispatch({
+      type: GET_PROFILE,
+      payload: res.data,
+    });
+  } catch (err) {
+    const errors = err.response.data;
+    if (errors) {
+      dispatch(setAlert(errors, "danger"));
+    }
+    dispatch({
+      type: PROFILE_ERR,
+    });
+  }
+};
+//Get github username
+export const getGithub = (username) => async (dispatch) => {
+  try {
+    const res = await axios.get(`/github/${username}`);
+    dispatch({
+      type: GET_REPOS,
+      payload: res.data,
+    });
+  } catch (err) {
+    const errors = err.response.data;
+    if (errors) {
+      dispatch(setAlert(errors, "danger"));
+    }
+    dispatch({
+      type: PROFILE_ERR,
+    });
+  }
+};
 //Add experience
 export const addExperience = (formData, history) => async (dispatch) => {
   try {
@@ -130,7 +186,7 @@ export const deleteEducation = (id) => async (dispatch) => {
 export const deleteAccount = () => async (dispatch) => {
   if (window.confirm("Are you sure? This can NOT be undone!")) {
     try {
-      const res = await axios.delete("/api/profile");
+      await axios.delete("/api/profile");
       dispatch({
         type: CLEAR_PROFILE,
       });
