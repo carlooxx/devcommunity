@@ -1,7 +1,9 @@
 import React, { Fragment } from "react";
 import formatDate from "../../util/formateDate";
-
+import { deleteExperience } from "../../action/profile";
+import { useDispatch } from "react-redux";
 const Experience = ({ experience }) => {
+  const dispatch = useDispatch();
   const experiences = experience.map((exp) => (
     <tr key={exp._id}>
       <td>{exp.company}</td>
@@ -10,7 +12,12 @@ const Experience = ({ experience }) => {
         {formatDate(exp.from)} - {exp.to ? formatDate(exp.to) : "Now"}
       </td>
       <td>
-        <button className="btn btn-danger">Delete</button>
+        <button
+          className="btn btn-danger"
+          onClick={() => dispatch(deleteExperience(exp._id))}
+        >
+          Delete
+        </button>
       </td>
     </tr>
   ));

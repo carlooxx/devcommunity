@@ -4,6 +4,8 @@ const router = express.Router();
 const verify = require("../../verifyToken");
 const Profile = require("../../models/Profile");
 const User = require("../../models/User");
+const Post = require("../../models/Post");
+
 dotenv.config();
 
 const {
@@ -105,6 +107,7 @@ router.get("/user/:user_id", async (req, res) => {
 });
 //Delete profile and user
 router.delete("/", verify, async (req, res) => {
+  await Post.deleteMany({ user: req.user.id });
   await Profile.findOneAndRemove({ user: req.user.id });
   await User.findOneAndRemove({ _id: req.user.id });
   res.send("User deleted");
