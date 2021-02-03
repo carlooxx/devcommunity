@@ -48,11 +48,11 @@ router.delete("/:id", verify, async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
     if (post.user.toString() !== req.user.id) {
-      return res.status(401).json({ msg: "User not authorized" });
+      return res.status(401).json("User not authorized");
     }
     await post.remove();
 
-    res.json({ msg: "Post removed" });
+    res.json("Post removed");
   } catch (err) {
     res.status(400).send("Server error");
   }

@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 import formateDate from "../../util/formateDate";
 import { useSelector, useDispatch } from "react-redux";
-import { addLike, removeLike } from "../../action/posts";
+import { addLike, removeLike, deletePost } from "../../action/posts";
 
 const PostItem = ({
   post: { _id, text, name, avatar, user, date, likes, comments },
@@ -44,7 +44,11 @@ const PostItem = ({
             )}
           </Link>
           {!auth.isLoading && user === auth.user._id && (
-            <button type="button" className="btn btn-danger">
+            <button
+              type="button"
+              className="btn btn-danger"
+              onClick={() => dispatch(deletePost(_id))}
+            >
               <i className="fas fa-times" />
             </button>
           )}
