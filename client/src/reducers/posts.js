@@ -1,4 +1,10 @@
-import { GET_POSTS, POST_ERR, LIKE_UPDATE, DELETE_POST } from "../action/types";
+import {
+  GET_POSTS,
+  POST_ERR,
+  LIKE_UPDATE,
+  DELETE_POST,
+  CREATE_POST,
+} from "../action/types";
 
 const initState = {
   posts: [],
@@ -24,6 +30,12 @@ const posts = (state = initState, action) => {
             : post
         ),
         isLoading: false,
+      };
+    case CREATE_POST:
+      return {
+        ...state,
+        posts: [action.payload, ...state.posts],
+        loading: false,
       };
     case DELETE_POST:
       return {
