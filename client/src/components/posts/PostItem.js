@@ -1,11 +1,13 @@
 import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 import formateDate from "../../util/formateDate";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { addLike, removeLike } from "../../action/posts";
 
 const PostItem = ({
   post: { _id, text, name, avatar, user, date, likes, comments },
 }) => {
+  const dispatch = useDispatch();
   const auth = useSelector((state) => state.authReducer);
   return (
     <div className="post bg-white p-1 my-1">
@@ -20,11 +22,19 @@ const PostItem = ({
         <p className="post-date">Posted on {formateDate(date)}</p>
 
         <Fragment>
-          <button type="button" className="btn btn-light">
+          <button
+            type="button"
+            className="btn btn-light"
+            onClick={(e) => dispatch(addLike(_id))}
+          >
             <i className="fas fa-thumbs-up" />{" "}
             <span>{likes.length > 0 && <span>{likes.length}</span>}</span>
           </button>
-          <button type="button" className="btn btn-light">
+          <button
+            type="button"
+            className="btn btn-light"
+            onClick={(e) => dispatch(removeLike(_id))}
+          >
             <i className="fas fa-thumbs-down" />
           </button>
           <Link to={`/posts/${_id}`} className="btn btn-primary">

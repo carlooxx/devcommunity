@@ -66,7 +66,7 @@ router.put("/like/:id", verify, async (req, res) => {
       post.likes.filter((like) => like.user.toString() === req.user.id).length >
       0
     ) {
-      return res.status(400).json({ msg: "Post alerady liked" });
+      return res.status(400).json("Post alerady liked");
     }
     //Pushing in array user who liked
     post.likes.unshift({ user: req.user.id });
@@ -81,18 +81,20 @@ router.put("/like/:id", verify, async (req, res) => {
 router.put("/unlike/:id", verify, async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
+
     //Check if post is already liked by this user
     if (
       post.likes.filter((like) => like.user.toString() === req.user.id)
         .length === 0
     ) {
-      return res.status(400).json({ msg: "Post has not yet been liked" });
+      return res.status(400).json("Post has not yet been liked");
     }
 
-    const removeIndex = post.likes
-      .map((like) => like.user.toString())
-      .indexOf(req.user.id);
-    post.likes.splice(removeIndex, 1);
+    //Remove the like
+    post.likes = post.likes.filter(
+      ({ user }) => user.toString() !== req.user.id
+    );
+    console.log(post.likes);
     //Save to database
     await post.save();
     res.json(post.likes);
