@@ -18,6 +18,9 @@ const Post = () => {
     <Spinner />
   ) : (
     <Fragment>
+      <Link to="/posts" className="btn btn-light">
+        Back To Posts
+      </Link>
       <div class="post bg-white p-1 my-1">
         <div>
           <Link to="/profile">

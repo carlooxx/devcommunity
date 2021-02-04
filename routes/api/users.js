@@ -5,6 +5,7 @@ const gravatar = require("gravatar");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
+const normalize = require("normalize-url");
 
 //Importing Model
 const User = require("../../models/User");
@@ -20,11 +21,14 @@ router.post("/", async (req, res) => {
     if (emailExist) return res.status(400).send("User already exist");
 
     //Avatar
-    const avatar = gravatar.url(req.body.email, {
-      s: "200",
-      r: "pg",
-      d: "mm",
-    });
+    const avatar = normalize(
+      gravatar.url(req.body.email, {
+        s: "200",
+        r: "pg",
+        d: "mm",
+      }),
+      { forceHttps: true }
+    );
 
     //Password encrypt
     const salt = await bcrypt.genSalt(10);
@@ -36,30 +40,11 @@ router.post("/", async (req, res) => {
       avatar,
       password: hashedPassword,
     });
-    // const payload = {
-    //   user: {
-    //     id: user.id,
-    //   },
-    // };
-
-    // const token = jwt.sign(
-    //   payload,
-    //   process.env.TOKEN_SECRET,
-    //   { expiresIn: "5 days" },
-    //   (err, token) => {
-    //     if (err) throw err;
-    //     res.json({ token });
-    //   }
-    // );
     // JWT
     const token = jwt.sign({ id: user.id }, process.env.TOKEN_SECRET, {
       expiresIn: 360000,
     });
-
-    // res.header("auth-token", token);
-
     //Saving user
-
     await user.save();
     res.send({ token });
 

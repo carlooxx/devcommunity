@@ -17,6 +17,7 @@ const PostForm = () => {
       </div>
       <form className="form my-1">
         <textarea
+          className="textarea-shadow"
           name="text"
           cols="30"
           rows="5"

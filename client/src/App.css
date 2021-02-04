@@ -2,9 +2,10 @@
 :root {
   --primary-color: #17a2b8;
   --dark-color: #343a40;
-  --light-color: #f4f4f4;
+  --light-color: #fff;
   --danger-color: #dc3545;
   --success-color: #28a745;
+  --grey-color: #535e66;
 }
 
 * {
@@ -17,7 +18,7 @@ body {
   font-family: "Raleway", sans-serif;
   font-size: 1rem;
   line-height: 1.6;
-  background-color: #fff;
+  background-color: #eef2f7;
   color: #333;
 }
 
@@ -137,6 +138,10 @@ img {
   margin-right: 0.5rem;
   transition: opacity 0.2s ease-in;
   outline: none;
+  /* -webkit-box-shadow: 0 10px 6px -6px #777;
+  -moz-box-shadow: 0 10px 6px -6px #777;
+  box-shadow: 0 10px 6px -6px #777; */
+  border-radius: 6px;
 }
 
 .badge {
@@ -154,6 +159,7 @@ img {
   opacity: 0.9;
   background: var(--light-color);
   color: #333;
+  border-radius: 6px;
 }
 
 .btn-primary,
@@ -168,8 +174,8 @@ img {
 .bg-light,
 .badge-light,
 .alert-light {
-  background: var(--light-color);
-  color: #333;
+  background: var(--grey-color);
+  color: #fff;
 }
 
 .btn-dark,
@@ -288,6 +294,13 @@ button {
   color: #0077b5;
 }
 
+.table {
+  -webkit-box-shadow: 0 10px 6px -6px #777;
+  -moz-box-shadow: 0 10px 6px -6px #777;
+  box-shadow: 0 10px 6px -6px #777;
+  border-radius: 6px;
+}
+
 .table th,
 .table td {
   padding: 1rem;
@@ -295,20 +308,30 @@ button {
 }
 
 .table th {
+  background: var(--grey-color);
+  color: white;
+  box-shadow: inset 0px 1px 2px #568ebd;
+}
+.table tr {
   background: var(--light-color);
 }
 
+.textarea-shadow {
+  -webkit-box-shadow: 0 10px 6px -6px #777;
+  -moz-box-shadow: 0 10px 6px -6px #777;
+  box-shadow: 0 10px 6px -6px #777;
+  border-radius: 6px;
+}
 /* Navbar */
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.7rem 2rem;
+  padding: 0.9rem 2rem;
   position: fixed;
   z-index: 1;
   width: 100%;
   top: 0;
-  border-bottom: solid 1px var(--primary-color);
   opacity: 0.9;
 }
 
@@ -358,6 +381,10 @@ button {
   padding: 1rem;
   line-height: 1.8;
   margin-bottom: 1rem;
+  -webkit-box-shadow: 0 10px 6px -6px #777;
+  -moz-box-shadow: 0 10px 6px -6px #777;
+  box-shadow: 0 10px 6px -6px #777;
+  border-radius: 6px;
 }
 
 /* Profile Page */
@@ -464,6 +491,10 @@ button {
   grid-template-columns: 1fr 4fr;
   grid-gap: 2rem;
   align-items: center;
+  -webkit-box-shadow: 0 10px 6px -6px #777;
+  -moz-box-shadow: 0 10px 6px -6px #777;
+  box-shadow: 0 10px 6px -6px #777;
+  border-radius: 6px;
 }
 
 .post > div:first-child {
@@ -478,7 +509,7 @@ button {
   background: var(--light-color);
   color: var(--primary-color);
   padding: 0.1rem 0.2rem;
-  border-radius: 5px;
+  border-radius: 6px;
   font-size: 0.8rem;
 }
 
