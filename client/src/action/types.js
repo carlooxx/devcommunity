@@ -19,3 +19,6 @@ export const POST_ERR = "POST_ERR";
 export const LIKE_UPDATE = "LIKE_UPDATE";
 export const DELETE_POST = "DELETE_POST";
 export const CREATE_POST = "CREATE_POST";
+export const GET_POST = "GET_POST";
+export const ADD_COMMENT = "ADD_COMMENT";
+export const DELETE_COMMENT = "DELETE_COMMENT";

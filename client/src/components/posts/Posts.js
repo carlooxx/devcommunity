@@ -8,7 +8,6 @@ import PostForm from "./PostForm";
 const Posts = () => {
   const isLoading = useSelector((state) => state.posts.isLoading);
   const posts = useSelector((state) => state.posts.posts);
-
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getPosts());

@@ -24,7 +24,7 @@ router.post("/", verify, async (req, res) => {
     res.status(400).send("Server error");
   }
 });
-//Get post
+//Get posts
 router.get("/", verify, async (req, res) => {
   try {
     const posts = await Post.find().sort({ date: -1 });
@@ -37,7 +37,7 @@ router.get("/", verify, async (req, res) => {
 router.get("/:id", verify, async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
-    if (!post) return res.status(404).json({ msg: "Post not found" });
+    if (!post) return res.status(404).json("Post not found");
     res.json(post);
   } catch (err) {
     res.status(400).send("Server error");
